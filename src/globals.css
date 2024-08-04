@@ -1,0 +1,12 @@
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.table {
+  display: flex;
+  width: 100%;
+  border-collapse: collapse;
+}
