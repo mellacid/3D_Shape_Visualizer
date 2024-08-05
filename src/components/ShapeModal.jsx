@@ -8,31 +8,34 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Typography,
+  FormHelperText,
 } from "@mui/material";
 
 function ShapeModal({ open, onClose, onSave }) {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateInputs = () => {
+    let tempErrors = {};
+    if (!name.trim()) tempErrors.name = "Name is required";
+    if (!type) tempErrors.type = "Type is required";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
 
   const handleSave = () => {
-    if (!type) {
-      setError("Please select a shape type");
-      return;
+    if (validateInputs()) {
+      onSave({
+        name: name.trim() || type,
+        type,
+        dimensions: { x: 1, y: 1, z: 1 },
+      });
+      setName("");
+      setType("");
+      setErrors({});
+      onClose();
     }
-
-    const shapeName = name.trim() || type;
-    onSave({
-      name: shapeName,
-      type,
-      dimensions: { x: 1, y: 1, z: 1 },
-      position: { x: 0, y: 0, z: 0 },
-    });
-    setName("");
-    setType("");
-    setError("");
-    onClose();
   };
 
   return (
@@ -50,13 +53,15 @@ function ShapeModal({ open, onClose, onSave }) {
         }}
       >
         <TextField
-          label="Name (optional)"
+          label="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           fullWidth
           margin="normal"
+          error={!!errors.name}
+          helperText={errors.name}
         />
-        <FormControl fullWidth margin="normal">
+        <FormControl fullWidth margin="normal" error={!!errors.type}>
           <InputLabel>Type</InputLabel>
           <Select
             value={type}
@@ -68,11 +73,9 @@ function ShapeModal({ open, onClose, onSave }) {
             <MenuItem value="cylinder">Cylinder</MenuItem>
             <MenuItem value="cone">Cone</MenuItem>
           </Select>
+          {errors.type && <FormHelperText>{errors.type}</FormHelperText>}
         </FormControl>
-        {error && <Typography color="error">{error}</Typography>}
-        <Button onClick={handleSave} disabled={!type}>
-          Save
-        </Button>
+        <Button onClick={handleSave}>Save</Button>
       </Box>
     </Modal>
   );

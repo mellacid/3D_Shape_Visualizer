@@ -6,6 +6,7 @@ import {
   Typography,
   Slider,
   Grid,
+  Tooltip,
 } from "@mui/material";
 import ShapeTable from "./components/ShapeTable";
 import ShapeModal from "./components/ShapeModal";
@@ -62,8 +63,12 @@ function App() {
       <h1>3D Shape Visualizer</h1>
       {!showCanvas ? (
         <Box>
-          <Button onClick={() => setIsModalOpen(true)}>Create</Button>
-          <Button onClick={() => setShowCanvas(true)}>Render</Button>
+          <Tooltip title="Create a new shape">
+            <Button onClick={() => setIsModalOpen(true)}>Create</Button>
+          </Tooltip>
+          <Tooltip title="Render all shapes in 3D">
+            <Button onClick={() => setShowCanvas(true)}>Render</Button>
+          </Tooltip>
           <ShapeTable
             shapes={shapes}
             onDelete={handleDeleteShape}
@@ -85,6 +90,7 @@ function App() {
               setShowCanvas(false);
               setSelectedShape(null);
             }}
+            style={{ position: "absolute", top: 10, right: 10 }}
           >
             x
           </Button>
@@ -93,10 +99,31 @@ function App() {
             onShapeClick={handleShapeClick}
           />
           {selectedShape && (
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Typography variant="h6">{selectedShape.name}</Typography>
-              </Grid>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 10,
+                left: 10,
+                backgroundColor: "rgba(255,255,255,0.7)",
+                padding: "10px",
+              }}
+            >
+              <Typography variant="h6">{selectedShape.name}</Typography>
+            </Box>
+          )}
+          {selectedShape && (
+            <Grid
+              container
+              spacing={2}
+              sx={{
+                position: "absolute",
+                bottom: 10,
+                left: 10,
+                right: 10,
+                backgroundColor: "rgba(255,255,255,0.7)",
+                padding: "10px",
+              }}
+            >
               <Grid item xs={4}>
                 <Typography>X dimension:</Typography>
                 <Slider
