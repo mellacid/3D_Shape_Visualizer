@@ -64,10 +64,18 @@ function App() {
       {!showCanvas ? (
         <Box>
           <Tooltip title="Create a new shape">
-            <Button onClick={() => setIsModalOpen(true)}>Create</Button>
+            <Button
+              onClick={() => setIsModalOpen(true)}
+              variant="outlined"
+              sx={{ margin: "5px" }}
+            >
+              Create
+            </Button>
           </Tooltip>
           <Tooltip title="Render all shapes in 3D">
-            <Button onClick={() => setShowCanvas(true)}>Render</Button>
+            <Button onClick={() => setShowCanvas(true)} variant="outlined">
+              Render
+            </Button>
           </Tooltip>
           <ShapeTable
             shapes={shapes}
@@ -91,6 +99,7 @@ function App() {
               setSelectedShape(null);
             }}
             style={{ position: "absolute", top: 10, right: 10 }}
+            variant="outlined"
           >
             x
           </Button>
@@ -101,9 +110,7 @@ function App() {
           {selectedShape && (
             <Box
               sx={{
-                position: "absolute",
-                top: 10,
-                left: 10,
+                position: "sticky",
                 backgroundColor: "rgba(255,255,255,0.7)",
                 padding: "10px",
               }}

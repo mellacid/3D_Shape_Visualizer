@@ -29,8 +29,20 @@ function ShapeTable({ shapes, onDelete, onRender }) {
               <TableCell>{shape.name}</TableCell>
               <TableCell>{shape.type}</TableCell>
               <TableCell>
-                <Button onClick={() => onDelete(shape.id)}>Delete</Button>
-                <Button onClick={() => onRender(shape.id)}>Render</Button>
+                <Button
+                  onClick={() => onDelete(shape.id)}
+                  variant="outlined"
+                  sx={{ margin: "5px" }}
+                >
+                  Delete
+                </Button>
+                <Button
+                  onClick={() => onRender(shape.id)}
+                  variant="outlined"
+                  sx={{ margin: "5px" }}
+                >
+                  Render
+                </Button>
               </TableCell>
             </TableRow>
           ))}
