@@ -10,7 +10,7 @@ import {
   Button,
 } from "@mui/material";
 
-const ShapeTable = ({ shapes, onDelete, onRender }) => {
+function ShapeTable({ shapes, onDelete, onRender }) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -23,8 +23,9 @@ const ShapeTable = ({ shapes, onDelete, onRender }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {shapes.map((shape) => (
+          {shapes.map((shape, index) => (
             <TableRow key={shape.id}>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{shape.name}</TableCell>
               <TableCell>{shape.type}</TableCell>
               <TableCell>
@@ -37,6 +38,6 @@ const ShapeTable = ({ shapes, onDelete, onRender }) => {
       </Table>
     </TableContainer>
   );
-};
+}
 
 export default ShapeTable;
