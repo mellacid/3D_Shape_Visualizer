@@ -24,6 +24,13 @@ function ShapeModal({ open, onClose, onSave }) {
     return Object.keys(tempErrors).length === 0;
   };
 
+  const handleCancel = () => {
+    setName("");
+    setType("");
+    setErrors({});
+    onClose();
+  };
+
   const handleSave = () => {
     if (validateInputs()) {
       onSave({
@@ -76,6 +83,7 @@ function ShapeModal({ open, onClose, onSave }) {
           {errors.type && <FormHelperText>{errors.type}</FormHelperText>}
         </FormControl>
         <Button onClick={handleSave}>Save</Button>
+        <Button onClick={handleCancel}>Cancel</Button>
       </Box>
     </Modal>
   );
