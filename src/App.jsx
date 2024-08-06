@@ -13,32 +13,38 @@ import ShapeModal from "./components/ShapeModal";
 import Canvas3D from "./components/Canvas3D";
 
 function App() {
+  // State management for shapes, modal, canvas (visibility), and selected shape
   const [shapes, setShapes] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCanvas, setShowCanvas] = useState(false);
   const [selectedShape, setSelectedShape] = useState(null);
 
   useEffect(() => {
+    // Load shapes from local storage on component mount
     const storedShapes = JSON.parse(localStorage.getItem("shapes") || "[]");
     setShapes(storedShapes);
   }, []);
 
+  // Add a new shape to the list
   const handleAddShape = (newShape) => {
     const updatedShapes = [...shapes, { ...newShape, id: shapes.length + 1 }];
     setShapes(updatedShapes);
     localStorage.setItem("shapes", JSON.stringify(updatedShapes));
   };
 
+  // Delete a shape from the list
   const handleDeleteShape = (id) => {
     const updatedShapes = shapes.filter((shape) => shape.id !== id);
     setShapes(updatedShapes);
     localStorage.setItem("shapes", JSON.stringify(updatedShapes));
   };
 
+  // Select a shape to display its dimensions
   const handleShapeClick = (id) => {
     setSelectedShape(shapes.find((shape) => shape.id === id));
   };
 
+  // Update the dimensions of the selected shape
   const handleDimensionChange = (dimension, value) => {
     if (selectedShape) {
       const updatedShapes = shapes.map((shape) =>
@@ -62,7 +68,9 @@ function App() {
     <Container>
       <h1>3D Shape Visualizer</h1>
       {!showCanvas ? (
+        // render table view
         <Box>
+          {/* Buttons to create a new shape and render all shapes */}
           <Tooltip title="Create a new shape">
             <Button
               onClick={() => setIsModalOpen(true)}
@@ -77,6 +85,7 @@ function App() {
               Render All
             </Button>
           </Tooltip>
+          {/* Shape table component */}
           <ShapeTable
             shapes={shapes}
             onDelete={handleDeleteShape}
@@ -85,6 +94,7 @@ function App() {
               setShowCanvas(true);
             }}
           />
+          {/* Shape creation modal */}
           <ShapeModal
             open={isModalOpen}
             onClose={() => setIsModalOpen(false)}
@@ -92,7 +102,9 @@ function App() {
           />
         </Box>
       ) : (
+        // Render canvas view
         <Box>
+          {/* Close button for canvas view */}
           <Button
             onClick={() => {
               setShowCanvas(false);
@@ -103,10 +115,12 @@ function App() {
           >
             x
           </Button>
+          {/* 3D canvas component */}
           <Canvas3D
             shapes={selectedShape ? [selectedShape] : shapes}
             onShapeClick={handleShapeClick}
           />
+          {/* Display selected shape name */}
           {selectedShape && (
             <Box
               sx={{
@@ -118,6 +132,7 @@ function App() {
               <Typography variant="h6">{selectedShape.name}</Typography>
             </Box>
           )}
+          {/* Shape dimension controls */}
           {selectedShape && (
             <Grid
               container
@@ -131,6 +146,7 @@ function App() {
                 padding: "10px",
               }}
             >
+              {/* X, Y, and Z dimension sliders */}
               <Grid item xs={4}>
                 <Typography>X dimension:</Typography>
                 <Slider
