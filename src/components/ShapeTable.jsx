@@ -15,6 +15,7 @@ function ShapeTable({ shapes, onDelete, onRender }) {
   return (
     <TableContainer component={Paper}>
       <Table>
+        {/* Table header */}
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
@@ -24,12 +25,14 @@ function ShapeTable({ shapes, onDelete, onRender }) {
           </TableRow>
         </TableHead>
         <TableBody>
+          {/* Table body */}
           {shapes.map((shape, index) => (
             <TableRow key={shape.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{shape.name}</TableCell>
               <TableCell>{shape.type}</TableCell>
               <TableCell>
+                {/* Delete button */}
                 <Tooltip title="Delete shape">
                   <Button
                     onClick={() => onDelete(shape.id)}
@@ -39,6 +42,7 @@ function ShapeTable({ shapes, onDelete, onRender }) {
                     Delete
                   </Button>
                 </Tooltip>
+                {/* Render button */}
                 <Tooltip title="Render shape in 3D">
                   <Button
                     onClick={() => onRender(shape.id)}
