@@ -1,14 +1,7 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
-import {
-  OrbitControls,
-  Box,
-  Sphere,
-  Cylinder,
-  Cone,
-  PivotControls,
-} from "@react-three/drei";
+import { OrbitControls, PivotControls } from "@react-three/drei";
+import { Box, Sphere, Cylinder, Cone } from "@react-three/drei";
 
 const calculatePositions = (shapes) => {
   const totalShapes = shapes.length;
@@ -59,6 +52,7 @@ function Shape({ shape, onClick }) {
       <mesh
         position={[shape.position.x, shape.position.y, shape.position.z]}
         onClick={onClick}
+        castShadow
       >
         {getGeometry()}
         <meshStandardMaterial color="orange" />
@@ -72,11 +66,17 @@ function Canvas3D({ shapes, onShapeClick }) {
 
   return (
     <Canvas
-      style={{ background: "black", height: "500px" }}
+      shadows
       camera={{ position: [0, 5, 15], fov: 30 }}
+      style={{ background: "black", height: "500px" }}
     >
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
+      <ambientLight intensity={0.3} />
+      <directionalLight
+        position={[5, 5, 5]}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
       <OrbitControls />
       {positionedShapes.map((shape) => (
         <Shape
@@ -85,6 +85,10 @@ function Canvas3D({ shapes, onShapeClick }) {
           onClick={() => onShapeClick(shape.id)}
         />
       ))}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
+        <planeGeometry args={[100, 100]} />
+        <shadowMaterial opacity={0.4} />
+      </mesh>
     </Canvas>
   );
 }

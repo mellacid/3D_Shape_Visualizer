@@ -82,8 +82,12 @@ function ShapeModal({ open, onClose, onSave }) {
           </Select>
           {errors.type && <FormHelperText>{errors.type}</FormHelperText>}
         </FormControl>
-        <Button onClick={handleSave}>Save</Button>
-        <Button onClick={handleCancel}>Cancel</Button>
+        <Button onClick={handleSave} variant="outlined" sx={{ margin: "5px" }}>
+          Save
+        </Button>
+        <Button onClick={handleCancel} variant="outlined">
+          Cancel
+        </Button>
       </Box>
     </Modal>
   );
