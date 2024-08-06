@@ -12,10 +12,12 @@ import {
 } from "@mui/material";
 
 function ShapeModal({ open, onClose, onSave }) {
+  // State for form inputs and errors
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [errors, setErrors] = useState({});
 
+  // Validate form inputs
   const validateInputs = () => {
     let tempErrors = {};
     if (!name.trim()) tempErrors.name = "Name is required";
@@ -24,6 +26,7 @@ function ShapeModal({ open, onClose, onSave }) {
     return Object.keys(tempErrors).length === 0;
   };
 
+  // Handle modal cancel
   const handleCancel = () => {
     setName("");
     setType("");
@@ -31,6 +34,7 @@ function ShapeModal({ open, onClose, onSave }) {
     onClose();
   };
 
+  // Handle modal save
   const handleSave = () => {
     if (validateInputs()) {
       onSave({
@@ -59,6 +63,7 @@ function ShapeModal({ open, onClose, onSave }) {
           minWidth: 300,
         }}
       >
+        {/* Name input field */}
         <TextField
           label="Name"
           value={name}
@@ -68,6 +73,7 @@ function ShapeModal({ open, onClose, onSave }) {
           error={!!errors.name}
           helperText={errors.name}
         />
+        {/* Shape type selection */}
         <FormControl fullWidth margin="normal" error={!!errors.type}>
           <InputLabel>Type</InputLabel>
           <Select
@@ -82,6 +88,7 @@ function ShapeModal({ open, onClose, onSave }) {
           </Select>
           {errors.type && <FormHelperText>{errors.type}</FormHelperText>}
         </FormControl>
+        {/* Save and Cancel buttons */}
         <Button onClick={handleSave} variant="outlined" sx={{ margin: "5px" }}>
           Save
         </Button>

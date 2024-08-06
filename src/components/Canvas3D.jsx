@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Box, Sphere, Cylinder, Cone, Edges } from "@react-three/drei";
 
+// Calculate positions for multiple shapes
 const calculatePositions = (shapes) => {
   const totalShapes = shapes.length;
   const spacing = 3;
@@ -18,7 +19,9 @@ const calculatePositions = (shapes) => {
   });
 };
 
+// Individual shape component
 function Shape({ shape, onClick }) {
+  // Get the appropriate geometry based on shape type
   const getGeometry = () => {
     switch (shape.type) {
       case "cube":
@@ -69,6 +72,7 @@ function Shape({ shape, onClick }) {
   );
 }
 
+// Main Canvas3D component
 function Canvas3D({ shapes, onShapeClick }) {
   const positionedShapes = calculatePositions(shapes);
 
@@ -79,6 +83,7 @@ function Canvas3D({ shapes, onShapeClick }) {
     >
       <ambientLight intensity={0.3} />
       <OrbitControls />
+      {/* Render all shapes */}
       {positionedShapes.map((shape) => (
         <Shape
           key={shape.id}
@@ -86,6 +91,7 @@ function Canvas3D({ shapes, onShapeClick }) {
           onClick={() => onShapeClick(shape.id)}
         />
       ))}
+      {/* Add a base plane */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}></mesh>
     </Canvas>
   );
