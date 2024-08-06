@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
   Button,
+  Tooltip,
 } from "@mui/material";
 
 function ShapeTable({ shapes, onDelete, onRender }) {
@@ -29,20 +30,24 @@ function ShapeTable({ shapes, onDelete, onRender }) {
               <TableCell>{shape.name}</TableCell>
               <TableCell>{shape.type}</TableCell>
               <TableCell>
-                <Button
-                  onClick={() => onDelete(shape.id)}
-                  variant="outlined"
-                  sx={{ margin: "5px" }}
-                >
-                  Delete
-                </Button>
-                <Button
-                  onClick={() => onRender(shape.id)}
-                  variant="outlined"
-                  sx={{ margin: "5px" }}
-                >
-                  Render
-                </Button>
+                <Tooltip title="Delete shape">
+                  <Button
+                    onClick={() => onDelete(shape.id)}
+                    variant="outlined"
+                    sx={{ margin: "5px" }}
+                  >
+                    Delete
+                  </Button>
+                </Tooltip>
+                <Tooltip title="Render shape in 3D">
+                  <Button
+                    onClick={() => onRender(shape.id)}
+                    variant="outlined"
+                    sx={{ margin: "5px" }}
+                  >
+                    Render
+                  </Button>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}

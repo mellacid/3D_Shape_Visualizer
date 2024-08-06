@@ -74,7 +74,7 @@ function App() {
           </Tooltip>
           <Tooltip title="Render all shapes in 3D">
             <Button onClick={() => setShowCanvas(true)} variant="outlined">
-              Render
+              Render All
             </Button>
           </Tooltip>
           <ShapeTable
