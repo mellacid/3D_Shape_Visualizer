@@ -1,7 +1,7 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Box, Sphere, Cylinder, Cone } from "@react-three/drei";
+import { Box, Sphere, Cylinder, Cone, Edges } from "@react-three/drei";
 
 const calculatePositions = (shapes) => {
   const totalShapes = shapes.length;
@@ -25,10 +25,16 @@ function Shape({ shape, onClick }) {
         return (
           <Box
             args={[shape.dimensions.x, shape.dimensions.y, shape.dimensions.z]}
-          />
+          >
+            <Edges color="grey" />
+          </Box>
         );
       case "sphere":
-        return <Sphere args={[shape.dimensions.x / 2, 32, 32]} />;
+        return (
+          <Sphere args={[shape.dimensions.x / 2, 32, 32]}>
+            <Edges color="grey" />
+          </Sphere>
+        );
       case "cylinder":
         return (
           <Cylinder
@@ -38,10 +44,16 @@ function Shape({ shape, onClick }) {
               shape.dimensions.y,
               32,
             ]}
-          />
+          >
+            <Edges color="grey" />
+          </Cylinder>
         );
       case "cone":
-        return <Cone args={[shape.dimensions.x / 2, shape.dimensions.y, 32]} />;
+        return (
+          <Cone args={[shape.dimensions.x / 2, shape.dimensions.y, 32]}>
+            <Edges color="grey" />
+          </Cone>
+        );
       default:
         return null;
     }
@@ -54,7 +66,7 @@ function Shape({ shape, onClick }) {
       castShadow
     >
       {getGeometry()}
-      <meshStandardMaterial color="orange" />
+      <meshBasicMaterial />
     </mesh>
   );
 }
@@ -75,16 +87,7 @@ function Canvas3D({ shapes, onShapeClick }) {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      <OrbitControls
-        enableDamping
-        dampingFactor={0.25}
-        rotateSpeed={0.5}
-        enableAxes={false}
-        enableGrid={false}
-        enableZoom={true}
-        enablePan={true}
-        enableRotate={true}
-      />
+      <OrbitControls />
       {positionedShapes.map((shape) => (
         <Shape
           key={shape.id}
