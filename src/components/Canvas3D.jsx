@@ -1,6 +1,6 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, PivotControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Box, Sphere, Cylinder, Cone } from "@react-three/drei";
 
 const calculatePositions = (shapes) => {
@@ -48,16 +48,14 @@ function Shape({ shape, onClick }) {
   };
 
   return (
-    <PivotControls>
-      <mesh
-        position={[shape.position.x, shape.position.y, shape.position.z]}
-        onClick={onClick}
-        castShadow
-      >
-        {getGeometry()}
-        <meshStandardMaterial color="orange" />
-      </mesh>
-    </PivotControls>
+    <mesh
+      position={[shape.position.x, shape.position.y, shape.position.z]}
+      onClick={onClick}
+      castShadow
+    >
+      {getGeometry()}
+      <meshStandardMaterial color="orange" />
+    </mesh>
   );
 }
 
@@ -77,7 +75,16 @@ function Canvas3D({ shapes, onShapeClick }) {
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
-      <OrbitControls />
+      <OrbitControls
+        enableDamping
+        dampingFactor={0.25}
+        rotateSpeed={0.5}
+        enableAxes={false}
+        enableGrid={false}
+        enableZoom={true}
+        enablePan={true}
+        enableRotate={true}
+      />
       {positionedShapes.map((shape) => (
         <Shape
           key={shape.id}
